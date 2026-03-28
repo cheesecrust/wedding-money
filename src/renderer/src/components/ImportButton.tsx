@@ -9,11 +9,7 @@ export default function ImportButton({ onImport }: ImportButtonProps): React.JSX
   const fileRef = useRef<HTMLInputElement>(null)
 
   const parseCsv = (text: string): GuestInput[] => {
-    const lines = text
-      .replace(/\r\n/g, '\n')
-      .replace(/\r/g, '\n')
-      .trim()
-      .split('\n')
+    const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim().split('\n')
     if (lines.length < 2) return []
 
     const parseRow = (line: string): string[] => {
@@ -76,9 +72,9 @@ export default function ImportButton({ onImport }: ImportButtonProps): React.JSX
         name,
         amount,
         meal_tickets: Number(cols[tIdx]?.trim()) || 0,
-        delivery_method: dIdx !== -1 ? cols[dIdx]?.trim() ?? '' : '',
-        relationship: rIdx !== -1 ? cols[rIdx]?.trim() ?? '' : '',
-        memo: mIdx !== -1 ? cols[mIdx]?.trim() ?? '' : '',
+        delivery_method: dIdx !== -1 ? (cols[dIdx]?.trim() ?? '') : '',
+        relationship: rIdx !== -1 ? (cols[rIdx]?.trim() ?? '') : '',
+        memo: mIdx !== -1 ? (cols[mIdx]?.trim() ?? '') : '',
         gift: ''
       })
     }
@@ -96,7 +92,13 @@ export default function ImportButton({ onImport }: ImportButtonProps): React.JSX
 
   return (
     <>
-      <input ref={fileRef} type="file" accept=".csv" style={{ display: 'none' }} onChange={handleFile} />
+      <input
+        ref={fileRef}
+        type="file"
+        accept=".csv"
+        style={{ display: 'none' }}
+        onChange={handleFile}
+      />
       <button type="button" className="import-btn" onClick={() => fileRef.current?.click()}>
         📥 CSV 가져오기
       </button>
